@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Image } from 'react-nati
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 
-import logo from './assets/logo.png';  // <-- Import your logo here
+import logo from './assets/logo.png';  // <-- This willbe our logo
 
 const Tab = createBottomTabNavigator();
 
@@ -14,8 +14,8 @@ function DashboardScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.container}>
       <Image source={logo} style={styles.logo} />
-      <Text style={styles.title}>Welcome to HealthLink Dashboard</Text>
-      <Text style={styles.subtitle}>Use the tabs below to access features</Text>
+      <Text style={styles.title}>Welcome to ConnectCare Dashboard</Text>
+      <Text style={styles.subtitle}> We are happy to have to have you</Text>
     </LinearGradient>
   );
 }
@@ -25,7 +25,7 @@ function SymptomsScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>📝 Symptom Checker</Text>
+        <Text style={styles.title}>📝 Symptom Checker (Urwaye Iki )</Text>
         <TextInput
           style={styles.input}
           placeholder="Describe your symptoms..."
@@ -69,7 +69,7 @@ function DoctorSearchScreen() {
           placeholder="Search by name, specialization, or location"
           placeholderTextColor="#333"
         />
-        <Text style={styles.subtitle}>Feature coming soon — powered by our doctor API</Text>
+        <Text style={styles.subtitle}>Feature coming soon — Will use API</Text>
       </ScrollView>
     </LinearGradient>
   );
@@ -83,11 +83,11 @@ function ChatbotScreen() {
         <Text style={styles.title}>💬 Mental Health Chatbot</Text>
         <TextInput
           style={[styles.input, { height: 80 }]}
-          placeholder="How are you feeling today?"
+          placeholder="How are you feeling today? ( Umeze Ute)"
           placeholderTextColor="#333"
           multiline
         />
-        <Text style={styles.subtitle}>AI-guided support coming soon ❤️</Text>
+        <Text style={styles.subtitle}>AI support will add later on</Text>
       </ScrollView>
     </LinearGradient>
   );
@@ -97,9 +97,9 @@ function ChatbotScreen() {
 function CallDoctorScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.container}>
-      <Text style={styles.title}>📞 Call a Doctor</Text>
+      <Text style={styles.title}>📞 Call a Doctor (Guhamagara muganga)</Text>
       <Text style={styles.subtitle}>Phone: +250 792041765</Text>
-      <Text style={styles.subtitle}>Click-to-call feature coming soon</Text>
+      <Text style={styles.subtitle}>Click-to-call feature will be added soon</Text>
     </LinearGradient>
   );
 }
