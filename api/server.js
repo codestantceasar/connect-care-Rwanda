@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
   res.send('API is running');
 });
 
+// Auth routes
 app.get('/auth/login', (req, res) => {
   res.send('Login to Connectcare');
 });
@@ -21,6 +22,7 @@ app.post('/auth/register', (req, res) => {
   res.send('Register for Connectcare');
 });
 
+// Consultation routes
 app.get('/consultation/all', (req, res) => {
   res.send('All consultations');
 });
