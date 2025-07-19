@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const auth = require('./utils/auth');
 
 const app = express();
 const PORT = 3000;
