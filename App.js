@@ -1,141 +1,193 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text, StyleSheet, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Button,
+  Platform
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { StatusBar } from 'expo-status-bar';
-
-import logo from './assets/logo.png';
+import logo from './assets/logo.png'; // Add your logo image here
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+// Dashboard
 function DashboardScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.container}>
       <Image source={logo} style={styles.logo} />
-      <Text style={styles.title}>Welcome to ConnectCare Dashboard</Text>
-      <Text style={styles.subtitle}>We are happy to have you</Text>
+      <Text style={styles.title}>Murakaza neza kuri ConnectCare ( Welcome) </Text>
+      <Text style={styles.subtitle}>Twishimiye kukwakira!</Text>
     </LinearGradient>
   );
 }
 
+// Symptoms
 function SymptomsScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>📝 Symptom Checker (Urwaye Iki)</Text>
+        <Text style={styles.title}>📝 Igenzura ry’Ibimenyetso (Urwaye Iki?)</Text>
         <TextInput
           style={styles.input}
-          placeholder="Describe your symptoms..."
+          placeholder="Sobanura ibimenyetso byawe..."
           placeholderTextColor="#333"
           multiline
         />
-        <Text style={styles.subtitle}>Submit to get results (API will be added later)</Text>
+        <Text style={styles.subtitle}>Uzatanga ibisubizo nyuma (API irimo kuza)</Text>
       </ScrollView>
     </LinearGradient>
   );
 }
 
+// Appointments with Calendar
 function AppointmentsScreen() {
+  const [name, setName] = useState('');
+  const [reason, setReason] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowPicker(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>📅 Appointment Requests</Text>
-        <TextInput style={styles.input} placeholder="Your Name" placeholderTextColor="#333" />
-        <TextInput style={styles.input} placeholder="Preferred Date" placeholderTextColor="#333" />
+        <Text style={styles.title}>📅 Gusaba Rendez-vous</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Amazina yawe"
+          value={name}
+          onChangeText={setName}
+          placeholderTextColor="#333"
+        />
+        <TouchableOpacity style={styles.input} onPress={() => setShowPicker(true)}>
+          <Text style={{ color: '#333' }}>
+            Itariki: {date.toLocaleDateString()}
+          </Text>
+        </TouchableOpacity>
+        {showPicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+          />
+        )}
         <TextInput
           style={[styles.input, { height: 80 }]}
-          placeholder="Reason"
-          placeholderTextColor="#333"
+          placeholder="Impamvu y’urugendo kwa muganga"
+          value={reason}
+          onChangeText={setReason}
           multiline
+          placeholderTextColor="#333"
         />
-        <Text style={styles.subtitle}>Submit button will trigger API call later</Text>
+        <View style={{ marginTop: 10 }}>
+          <Button title="Ohereza" onPress={() => alert("Ibisabwa byakiriwe!")} color="#333" />
+        </View>
       </ScrollView>
     </LinearGradient>
   );
 }
 
+// Doctor Search
 function DoctorSearchScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>🔍 Find a Doctor</Text>
+        <Text style={styles.title}>🔍 Shakisha Muganga</Text>
         <TextInput
           style={styles.input}
-          placeholder="Search by name, specialization, or location"
+          placeholder="Andika izina, specialization cyangwa aho aherereye"
           placeholderTextColor="#333"
         />
-        <Text style={styles.subtitle}>Feature coming soon — Will use API</Text>
+        <Text style={styles.subtitle}>Ibirimo kuza — API izongerwamo vuba ( Working on API, stay tuned )</Text>
       </ScrollView>
     </LinearGradient>
   );
 }
 
+// Mental Health Chatbot
 function ChatbotScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>💬 Mental Health Chatbot</Text>
+        <Text style={styles.title}>💬 Chatbot y’Ubuzima bwo mu Mutwe ( Mental health )</Text>
         <TextInput
           style={[styles.input, { height: 80 }]}
-          placeholder="How are you feeling today? (Umeze Ute)"
+          placeholder="Umeze ute uyu munsi?"
           placeholderTextColor="#333"
           multiline
         />
-        <Text style={styles.subtitle}>AI support will add later on</Text>
+        <Text style={styles.subtitle}>AI chatbot coming soon (AI)</Text>
       </ScrollView>
     </LinearGradient>
   );
 }
 
+// Call Doctor
 function CallDoctorScreen() {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.container}>
-      <Text style={styles.title}>📞 Call a Doctor (Guhamagara muganga)</Text>
-      <Text style={styles.subtitle}>Phone: +250 792041765</Text>
-      <Text style={styles.subtitle}>Click-to-call feature will be added soon</Text>
+      <Text style={styles.title}>📞 Hamagara Muganga ( Call )</Text>
+      <Text style={styles.subtitle}>+250 792041765</Text>
+      <Text style={styles.subtitle}>Kanda kugira ngo uhamagare (coming soon)</Text>
     </LinearGradient>
   );
 }
 
+// Login
 function LoginScreen({ navigation }) {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}>Hey, Login</Text>
+        <Text style={styles.title}>Injira ( Login )</Text>
         <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#333" />
-        <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#333" secureTextEntry />
+        <TextInput style={styles.input} placeholder="Ijambo ry’ibanga" placeholderTextColor="#333" secureTextEntry />
         <TouchableOpacity style={styles.button} onPress={() => navigation.replace('Main')}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Injira</Text>
         </TouchableOpacity>
-        <Text style={styles.subtitle}>Don't have an account?</Text>
+        <Text style={styles.subtitle}>Nta konti ufite? ( No account ? )</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-          <Text style={[styles.subtitle, { textDecorationLine: 'underline' }]}>Create one here</Text>
+          <Text style={[styles.subtitle, { textDecorationLine: 'underline' }]}>Funguza konti hano ( SignUp)</Text>
         </TouchableOpacity>
       </ScrollView>
     </LinearGradient>
   );
 }
 
+// ✅ Signup with phone number added
 function SignupScreen({ navigation }) {
   return (
     <LinearGradient colors={['#FFC0CB', '#ADD8E6']} style={styles.scrollContainer}>
       <ScrollView contentContainerStyle={styles.innerScroll}>
-        <Text style={styles.title}> Sign Up(Funguza konti)</Text>
-        <TextInput style={styles.input} placeholder="Full Name" placeholderTextColor="#333" />
-        <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#333" />
-        <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#333" secureTextEntry />
+        <Text style={styles.title}>Funguza  ( Sign up )</Text>
+        <TextInput style={styles.input} placeholder="Amazina" placeholderTextColor="#333" />
+        <TextInput style={styles.input} placeholder="Imeyili" placeholderTextColor="#333" keyboardType="email-address" />
+        <TextInput style={styles.input} placeholder="Telefoni" placeholderTextColor="#333" keyboardType="phone-pad" />
+        <TextInput style={styles.input} placeholder="Ijambo ry’ibanga" placeholderTextColor="#333" secureTextEntry />
         <TouchableOpacity style={styles.button} onPress={() => navigation.replace('Main')}>
-          <Text style={styles.buttonText}>Create Account</Text>
+          <Text style={styles.buttonText}>Emeza</Text>
         </TouchableOpacity>
       </ScrollView>
     </LinearGradient>
   );
 }
 
-// Tab navigator wrapped in function
+// Tabs
 function MainTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -221,4 +273,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
